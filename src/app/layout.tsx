@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="sv">
       <body
-        className={`${inter.className} bg-gradient-to-br from-pink-300 via-purple-300 to-yellow-200 text-gray-800 min-h-screen flex flex-col justify-center items-center`}
+        className={`${inter.className} bg-gradient-to-br from-pink-250 via-purple-350 to-yellow-200 text-gray-800 min-h-screen flex flex-col justify-center items-center`}
       >
         {children}
       </body>
