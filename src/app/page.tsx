@@ -1,5 +1,4 @@
-// src/app/page.tsx
-"use client"; // Detta markerar komponenten som en Client Component
+"use client";
 
 import useWeather from "@/hooks/useWeather";
 import Header from "@/components/Header";

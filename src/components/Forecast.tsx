@@ -1,4 +1,3 @@
-// src/components/Forecast.tsx
 import React from "react";
 import { ForecastData, WeatherTip } from "@/types/weather.d";
 
