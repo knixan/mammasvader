@@ -54,15 +54,7 @@ export default function Home() {
                 )}
                 iconUrl={`${API_ICON_URL}${weatherData.weather[0].icon}@2x.png`}
               />
-              <div className="mt-8">
-                {forecastData && (
-                  <Forecast
-                    forecastData={forecastData}
-                    getWeatherTip={getWeatherTip}
-                    iconUrl={API_ICON_URL}
-                  />
-                )}
-              </div>
+              <div className="mt-8">{forecastData && <Forecast />}</div>
             </>
           )}
         </div>
