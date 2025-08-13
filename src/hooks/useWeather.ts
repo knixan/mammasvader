@@ -1,3 +1,4 @@
+// src/hooks/useWeather.ts
 import { useState, useEffect, useCallback } from "react";
 import { getCookie, setCookie } from "cookies-next";
 import { WeatherData, ForecastData, WeatherTip } from "@/types/weather.d";
