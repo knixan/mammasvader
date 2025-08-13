@@ -1,5 +1,6 @@
 import React from "react";
 import { WeatherData, WeatherTip } from "@/types/weather.d";
+import Image from "next/image";
 
 interface WeatherCardProps {
   weatherData: WeatherData;
@@ -20,10 +21,12 @@ const WeatherCard: React.FC<WeatherCardProps> = ({
     <div className="weather-card bg-white/20 p-8 rounded-3xl shadow-xl text-center w-full max-w-2xl backdrop-blur-md animate-fade-in">
       <h2 className="text-3xl font-extrabold text-white mb-2">{name}</h2>
       <div className="flex flex-col items-center justify-center my-4">
-        <img
+        <Image
           src={iconUrl}
           alt={weather[0].description}
-          className="weather-icon w-32 h-32 my-3 mx-auto drop-shadow-lg"
+          width={128} // w-32 motsvarar 128px i standard Tailwind-konfiguration
+          height={128} // h-32 motsvarar 128px
+          className="weather-icon my-3 mx-auto drop-shadow-lg"
         />
         <p className="temperature text-6xl font-bold text-white drop-shadow-md">
           {Math.round(main.temp)}°C
