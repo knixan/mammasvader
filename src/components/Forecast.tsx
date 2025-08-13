@@ -1,5 +1,6 @@
 import React from "react";
 import { ForecastData, WeatherTip } from "@/types/weather.d";
+import Image from "next/image";
 
 interface ForecastProps {
   forecastData: ForecastData;
@@ -63,10 +64,12 @@ const Forecast: React.FC<ForecastProps> = ({
               <p className="forecast-time font-bold text-lg text-white">
                 Om {3 * (index + 1)} timmar
               </p>
-              <img
+              <Image
                 src={`${iconUrl}${item.weather[0].icon}@2x.png`}
                 alt={item.weather[0].description}
-                className="forecast-icon w-16 h-16 mx-auto drop-shadow-lg"
+                width={64} // w-16 motsvarar 64px
+                height={64} // h-16 motsvarar 64px
+                className="forecast-icon mx-auto drop-shadow-lg"
               />
               <p className="forecast-temp text-3xl font-bold text-white">
                 {Math.round(item.main.temp)}°C
