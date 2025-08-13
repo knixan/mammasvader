@@ -12,7 +12,6 @@ const getWeatherTip = (
   temperature: number,
   windSpeed: number
 ): WeatherTip => {
-  // Uppdaterade tips för barn med emojis
   if (windSpeed >= 24)
     return {
       text: "Mamma säger: STORM! Stanna helst inne! ⛈️",
@@ -150,14 +149,6 @@ const useWeather = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const savedCity = getCookie("last_city");
-    if (savedCity && typeof savedCity === "string") {
-      setCity(savedCity);
-      fetchWeatherData(savedCity);
-    }
-  }, []);
-
   const fetchWeatherData = useCallback(async (searchCity: string) => {
     if (!searchCity || !API_KEY) {
       setError(
@@ -188,14 +179,26 @@ const useWeather = () => {
       setWeatherData(currentData);
       setForecastData(forecastData);
       setCookie("last_city", searchCity, { maxAge: 60 * 60 * 24 * 30 });
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Ett okänt fel inträffade.");
+      }
       setWeatherData(null);
       setForecastData(null);
     } finally {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    const savedCity = getCookie("last_city");
+    if (savedCity && typeof savedCity === "string") {
+      setCity(savedCity);
+      fetchWeatherData(savedCity);
+    }
+  }, [fetchWeatherData]);
 
   return {
     city,
