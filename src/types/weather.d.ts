@@ -1,4 +1,3 @@
-// src/types/weather.d.ts
 export interface WeatherData {
   name: string;
   main: {

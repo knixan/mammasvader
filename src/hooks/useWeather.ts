@@ -1,4 +1,3 @@
-// src/hooks/useWeather.ts
 import { useState, useEffect, useCallback } from "react";
 import { getCookie, setCookie } from "cookies-next";
 import { WeatherData, ForecastData, WeatherTip } from "@/types/weather.d";
@@ -153,7 +152,7 @@ const useWeather = () => {
   const fetchWeatherData = useCallback(async (searchCity: string) => {
     if (!searchCity || !API_KEY) {
       setError(
-        "Vänligen ange en stad och se till att API-nyckeln är inställd."
+        "Du stavade antagligen fel prova igen. Skriv inna mellanslag efter en ort."
       );
       return;
     }
