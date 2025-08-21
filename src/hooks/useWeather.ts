@@ -12,6 +12,7 @@ const getWeatherTip = (
   temperature: number,
   windSpeed: number
 ): WeatherTip => {
+  // Uppdaterade tips för barn med emojis
   if (windSpeed >= 24)
     return {
       text: "Mamma säger: STORM! Stanna helst inne! ⛈️",
@@ -192,6 +193,16 @@ const useWeather = () => {
     }
   }, []);
 
+  const getFilteredForecast = useCallback(() => {
+    if (!forecastData) {
+      return null;
+    }
+    // `list` är en array med prognoser i 3-timmarsintervall
+    const forecastList = forecastData.list;
+    // Här filtrerar vi ut de fyra första prognoserna
+    return forecastList.slice(0, 4);
+  }, [forecastData]);
+
   useEffect(() => {
     const savedCity = getCookie("last_city");
     if (savedCity && typeof savedCity === "string") {
@@ -209,6 +220,7 @@ const useWeather = () => {
     error,
     fetchWeatherData,
     getWeatherTip,
+    getFilteredForecast,
     API_ICON_URL,
   };
 };

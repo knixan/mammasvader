@@ -1,33 +1,14 @@
 import React from "react";
-import { ForecastData, WeatherTip } from "@/types/weather.d";
 import Image from "next/image";
+import useWeather from "@/hooks/useWeather";
 
-interface ForecastProps {
-  forecastData: ForecastData;
-  getWeatherTip: (weatherId: number, temp: number, wind: number) => WeatherTip;
-  iconUrl: string;
-}
+const Forecast: React.FC = () => {
+  const { getFilteredForecast, getWeatherTip, API_ICON_URL } = useWeather();
+  const forecastItems = getFilteredForecast();
 
-const Forecast: React.FC<ForecastProps> = ({
-  forecastData,
-  getWeatherTip,
-  iconUrl,
-}) => {
-  if (!forecastData) return null;
-
-  const getForecastItems = () => {
-    const items = forecastData.list;
-    const now = Date.now() / 1000;
-    const forecast = [3, 6, 9, 12].map((hours) => {
-      const targetTime = now + hours * 3600;
-      return items.find(
-        (item) => item.dt > now && Math.abs(item.dt - targetTime) <= 3600
-      );
-    });
-    return forecast;
-  };
-
-  const forecastItems = getForecastItems();
+  if (!forecastItems || forecastItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="forecast-display mt-10 animate-fade-in-up">
@@ -36,26 +17,12 @@ const Forecast: React.FC<ForecastProps> = ({
       </h3>
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {forecastItems.map((item, index) => {
-          if (!item) {
-            return (
-              <div
-                key={index}
-                className="forecast-item p-4 bg-gray-800/50 rounded-2xl text-center shadow-lg"
-              >
-                <p className="forecast-time font-bold text-lg text-gray-300">
-                  Om {3 * (index + 1)} timmar
-                </p>
-                <p className="text-sm text-gray-400 mt-2">
-                  Ingen prognos tillgänglig.
-                </p>
-              </div>
-            );
-          }
           const tip = getWeatherTip(
             item.weather[0].id,
             item.main.temp,
             item.wind.speed
           );
+
           return (
             <div
               key={item.dt}
@@ -65,10 +32,10 @@ const Forecast: React.FC<ForecastProps> = ({
                 Om {3 * (index + 1)} timmar
               </p>
               <Image
-                src={`${iconUrl}${item.weather[0].icon}@2x.png`}
+                src={`${API_ICON_URL}${item.weather[0].icon}@2x.png`}
                 alt={item.weather[0].description}
-                width={64} // w-16 motsvarar 64px
-                height={64} // h-16 motsvarar 64px
+                width={64}
+                height={64}
                 className="forecast-icon mx-auto drop-shadow-lg"
               />
               <p className="forecast-temp text-3xl font-bold text-white">
